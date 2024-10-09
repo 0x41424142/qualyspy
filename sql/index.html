@@ -1,0 +1,1115 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the qualysdk Python SDK. Make working with Qualys API data easier.">
+      
+      
+        <meta name="author" content="Jake Lindsay <jake@jakelindsay.uk>">
+      
+      
+      
+        <link rel="prev" href="../was/">
+      
+      
+        <link rel="next" href="../callschema/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
+    
+    
+      
+        <title>SQL Uploads - qualysdk Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c3ca2c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#uploading-data-to-a-sql-database" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="qualysdk Documentation" class="md-header__button md-logo" aria-label="qualysdk Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            qualysdk Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SQL Uploads
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/0x41424142/qualysdk" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="qualysdk Documentation" class="md-nav__button md-logo" aria-label="qualysdk Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    qualysdk Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/0x41424142/qualysdk" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gav/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Global AssetView
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vmdr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMDR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../totalcloud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TotalCloud
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud_agent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloud Agent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../containersecurity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Container Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../was/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Web Application Scanning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    SQL Uploads
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    SQL Uploads
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#supported-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Databases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steps-to-get-going" class="md-nav__link">
+    <span class="md-ellipsis">
+      Steps to Get Going
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps to Get Going">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-importing-functionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Importing Functionality
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-building-the-sqlalchemy-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Building the SQLAlchemy Connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-fire-away" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Fire Away!
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-friendly-recommendation-for-getting-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Friendly Recommendation For Getting Data
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../callschema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Call Schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#supported-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Databases
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steps-to-get-going" class="md-nav__link">
+    <span class="md-ellipsis">
+      Steps to Get Going
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps to Get Going">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-importing-functionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Importing Functionality
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-building-the-sqlalchemy-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Building the SQLAlchemy Connection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-fire-away" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Fire Away!
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-friendly-recommendation-for-getting-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Friendly Recommendation For Getting Data
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="uploading-data-to-a-sql-database">Uploading Data to a SQL Database</h1>
+<p><code>qualysdk</code> supports uploading data it has pulled to a SQL Database using various <code>upload_&lt;module&gt;_*</code> functions. Thanks to the <a href="https://pandas.pydata.org">Pandas library</a> and qualysdk's <code>BaseList</code> class, uploading is rather easy. <code>qualysdk</code> automatically will create the table for you if it does not exist, and will append data to the table if it does exist. The <code>import_datetime</code> field is also added to each table to track when the data was uploaded.</p>
+<h2 id="supported-databases">Supported Databases</h2>
+<ul>
+<li>SQL Server (<code>db_type='mssql'</code>)</li>
+<li>Postgresql (<code>db_type='postgresql'</code>)</li>
+<li>MySQL/MariaDB (<code>db_type='mysql'</code>)</li>
+<li>SQLite3 (<code>db_type='sqlite'</code>)</li>
+</ul>
+<h2 id="steps-to-get-going">Steps to Get Going</h2>
+<h3 id="step-1-importing-functionality">Step 1: Importing Functionality</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">qualysdk.sql</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+<h3 id="step-2-building-the-sqlalchemy-connection">Step 2: Building the SQLAlchemy Connection</h3>
+<p>Next, build your connection object. <code>qualysdk</code> supports username/password auth as well as trusted connections for SQL Server. You can specify the type of DB you are connecting to (default is <code>"mssql"</code>) via <code>db_type</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Get a sqlalchemy.Connection using trusted_connection to SQL Server.</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># since db_type defaults to &quot;mssql&quot;, you can omit it.</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">cnxn</span> <span class="o">=</span> <span class="n">db_connect</span><span class="p">(</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">host</span><span class="o">=</span><span class="s1">&#39;10.0.0.1&#39;</span><span class="p">,</span> 
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">db</span><span class="o">=</span><span class="s1">&#39;qualysdata&#39;</span><span class="p">,</span> 
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">trusted_cnxn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">port</span><span class="o">=</span><span class="mi">1433</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Get a sqlalchemy.Connection with username/password </span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># auth to a Postgresql DB:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">cnxn</span> <span class="o">=</span> <span class="n">db_connect</span><span class="p">(</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">host</span><span class="o">=</span><span class="s1">&#39;10.0.0.1&#39;</span><span class="p">,</span> 
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="n">db</span><span class="o">=</span><span class="s1">&#39;qualysdata&#39;</span><span class="p">,</span> 
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="n">username</span><span class="o">=</span><span class="s1">&#39;Jane&#39;</span><span class="p">,</span> 
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="n">password</span><span class="o">=</span><span class="s1">&#39;SuperSecretPassword!&#39;</span><span class="p">,</span> 
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    <span class="n">db_type</span><span class="o">=</span><span class="s1">&#39;postgresql&#39;</span><span class="p">,</span> 
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="n">port</span><span class="o">=</span><span class="mi">5432</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="p">)</span>
+</code></pre></div>
+<p>Note that you are required to call <code>.close()</code> on the connection object when you are done with it to close the connection to the DB.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">cnxn</span> <span class="o">=</span> <span class="n">db_connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;10.0.0.1&#39;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s1">&#39;qualysdata&#39;</span><span class="p">,</span> <span class="n">trusted_cnxn</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Do some stuff with the connection</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="o">...</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">cnxn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+<p>For connections to a SQLite3 database, you can use the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">cnxn</span> <span class="o">=</span> <span class="n">db_connect</span><span class="p">(</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">db_type</span><span class="o">=</span><span class="s1">&#39;sqlite&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">db</span><span class="o">=</span><span class="s1">&#39;C:</span><span class="se">\\</span><span class="s1">path</span><span class="se">\\</span><span class="s1">to</span><span class="se">\\</span><span class="s1">your</span><span class="se">\\</span><span class="s1">sqlite.db&#39;</span> <span class="c1">#Windows</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">)</span>
+</code></pre></div>
+<h3 id="step-3-fire-away">Step 3: Fire Away!</h3>
+<p>And finally, you can use the following supported functions:</p>
+<blockquote>
+<p><strong>Head's Up:</strong> More upload functions are coming soon!</p>
+</blockquote>
+<p>Each upload function takes 2 positional parameters. The first is the <code>BaseList</code> of data, and the second is the <code>sqlalchemy.Connection</code> object you built above. </p>
+<p>Functions also take an optional <code>override_import_dt</code> parameter that will set the resulting SQL table's <code>import_datetime</code> field to the value you specify. <code>override_import_dt</code> is a <code>datetime.datetime</code> object.</p>
+<p>The final optional parameter is <code>table_name</code>. If you want to specify a custom table name, you can do so with this parameter. Default table names are listed below. The one exception to this is <code>vmdr.get_hld()</code>, which accepts <code>vuln_table_name</code> and <code>hosts_table_name</code> as optional parameters to specify the table names for the detections and hosts, respectively.</p>
+<table>
+<thead>
+<tr>
+<th>Function Name</th>
+<th>Module</th>
+<th><code>qualysdk</code> Function Data Source</th>
+<th>Default SQL Table Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>upload_vmdr_ags</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_ag_list()</code></td>
+<td><code>vmdr_assetgroups</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_kb</code></td>
+<td>VMDR</td>
+<td><code>vmdr.query_kb()</code></td>
+<td><code>vmdr_knowledgebase</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_kb_qvs</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_kb_qvs()</code></td>
+<td><code>vmdr_kb_qvs</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_hosts</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_host_list()</code></td>
+<td><code>vmdr_hosts_list</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_hld</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_hld()</code></td>
+<td><code>vmdr_hld_hosts_list</code> for hosts and <code>vmdr_hld_detections</code> for detections</td>
+</tr>
+<tr>
+<td><code>upload_vmdr_ips</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_ip_list()</code></td>
+<td><code>vmdr_ips</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_scanners</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_scanner_list()</code></td>
+<td><code>vmdr_scanners</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_static_search_lists</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_static_searchlists()</code></td>
+<td><code>vmdr_static_searchlists</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_dynamic_search_lists</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_dynamic_searchlists()</code></td>
+<td><code>vmdr_dynamic_searchlists</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_users</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_user_list()</code></td>
+<td><code>vmdr_users</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_scan_list</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_scan_list()</code></td>
+<td><code>vmdr_scans</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_report_list</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_report_list()</code></td>
+<td><code>vmdr_reports</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_scheduled_report_list</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_scheduled_report_list()</code></td>
+<td><code>vmdr_scheduled_reports</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_template_list</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_template_list()</code></td>
+<td><code>vmdr_report_templates</code></td>
+</tr>
+<tr>
+<td><code>upload_vmdr_activity_log</code></td>
+<td>VMDR</td>
+<td><code>vmdr.get_activity_log()</code></td>
+<td><code>vmdr_activity_log</code></td>
+</tr>
+<tr>
+<td><code>upload_gav_hosts</code></td>
+<td>GAV</td>
+<td><code>gav.get_all_assets()</code> or <code>gav.query_assets()</code></td>
+<td><code>gav_hosts</code></td>
+</tr>
+<tr>
+<td><code>upload_cloud_agents</code></td>
+<td>Cloud Agent</td>
+<td><code>cloud_agent.list_agents()</code></td>
+<td><code>cloud_agent_agents</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_connectors</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_connectors()</code></td>
+<td><code>totalcloud_aws_connectors</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_azure_connectors</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_connectors()</code></td>
+<td><code>totalcloud_azure_connectors</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_control_metadata</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_control_metadata()</code></td>
+<td><code>totalcloud_control_metadata</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_s3</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='s3')</code></td>
+<td><code>totalcloud_aws_s3_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_ec2</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='ec2')</code></td>
+<td><code>totalcloud_aws_ec2_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_acl</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='acl')</code></td>
+<td><code>totalcloud_aws_acl_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_rds</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='rds')</code></td>
+<td><code>totalcloud_aws_rds_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_iamuser</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='iamuser')</code></td>
+<td><code>totalcloud_aws_iamuser_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_vpc</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='vpc')</code></td>
+<td><code>totalcloud_aws_vpc_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_securitygroup</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='sg')</code></td>
+<td><code>totalcloud_aws_securitygroup_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_lambda</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='lambda')</code></td>
+<td><code>totalcloud_aws_lambda_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_subnet</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='subnet')</code></td>
+<td><code>totalcloud_aws_subnet_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_internetgateway</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='internet gateway')</code></td>
+<td><code>totalcloud_aws_internetgateway_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_loadbalancer</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='load balancer')</code></td>
+<td><code>totalcloud_aws_loadbalancer_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_routetable</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='route table')</code></td>
+<td><code>totalcloud_aws_routetable_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_ebsvolume</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='ebs volume')</code></td>
+<td><code>totalcloud_aws_ebsvolume_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_autoscalinggroup</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='auto scaling group')</code></td>
+<td><code>totalcloud_aws_autoscalinggroup_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_ekscluster</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='eks cluster')</code></td>
+<td><code>totalcloud_aws_ekscluster_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_eksnodegroup</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='eks nodegroup')</code></td>
+<td><code>totalcloud_aws_eksnodegroup_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_fargateprofile</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='eks fargate profile')</code></td>
+<td><code>totalcloud_aws_fargateprofile_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_vpcendpoint</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='vpc endpoint')</code></td>
+<td><code>totalcloud_aws_vpcendpoint_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_vpcendpointservice</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='vpc endpoint service')</code></td>
+<td><code>totalcloud_aws_vpcendpointservice_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_iamgroup</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='iam group')</code></td>
+<td><code>totalcloud_aws_iamgroup_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_iampolicy</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='iam policy')</code></td>
+<td><code>totalcloud_aws_iampolicy_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_iamrole</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='iam role')</code></td>
+<td><code>totalcloud_aws_iamrole_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_sagemakernotebook</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='sagemaker notebook')</code></td>
+<td><code>totalcloud_aws_sagemakernotebook_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_aws_cloudfrontdistribution</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_inventory(provider='aws', resourceType='cloudfront distribution')</code></td>
+<td><code>totalcloud_aws_cloudfrontdistribution_inventory</code></td>
+</tr>
+<tr>
+<td><code>upload_totalcloud_remediation_activities</code></td>
+<td>TotalCloud</td>
+<td><code>totalcloud.get_remediation_activities()</code></td>
+<td><code>totalcloud_remediation_activities</code></td>
+</tr>
+<tr>
+<td><code>upload_cs_containers</code></td>
+<td>Container Security</td>
+<td><code>cs.list_containers()</code></td>
+<td><code>cs_containers</code></td>
+</tr>
+<tr>
+<td><code>upload_was_webapps</code></td>
+<td>WAS</td>
+<td><code>was.get_webapps()</code> or <code>was.get_webapps_verbose()</code> (<code>get_webapps_verbose()</code> is recommended!)</td>
+<td><code>was_webapps</code></td>
+</tr>
+<tr>
+<td><code>upload_was_authentication_records</code></td>
+<td>WAS</td>
+<td><code>was.get_authentication_records()</code> or <code>was.get_authentication_records_verbose()</code> (<code>get_webapps_verbose()</code> is recommended!)</td>
+<td><code>was_authentication_records</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">qualysdk.sql</span> <span class="kn">import</span> <span class="o">*</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Get a connection to the DB</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">cnxn</span> <span class="o">=</span> <span class="n">db_connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;10.0.0.1&#39;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s1">&#39;qualysdata&#39;</span><span class="p">,</span> <span class="n">trusted_cnxn</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># Upload a previous vmdr.get_host_list() call to the DB, with override_import_dt set</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># to 10-25-2023 12:00:00</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">uploaded</span> <span class="o">=</span> <span class="n">upload_vmdr_hosts</span><span class="p">(</span><span class="n">vmdr_hosts</span><span class="p">,</span> <span class="n">cnxn</span><span class="p">,</span> <span class="n">override_import_dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="o">&gt;&gt;&gt;</span><span class="n">Uploaded</span> <span class="mi">12345</span> <span class="n">records</span> <span class="n">to</span> <span class="n">vmdr_hosts_list</span>
+</code></pre></div>
+<h2 id="a-friendly-recommendation-for-getting-data">A Friendly Recommendation For Getting Data</h2>
+<p>When calling any of the data source functions to get the data to upload, it is recommended to make the call as verbose as possible via kwargs, or if the function supports it, using the <code>all_details</code> parameter.</p>
+<p>For example, using <code>vmdr.get_host_list()</code>, you should make your call look like the following so all data fields are captured:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">vmdr_hosts</span> <span class="o">=</span> <span class="n">vmdr</span><span class="o">.</span><span class="n">get_host_list</span><span class="p">(</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>        <span class="n">auth</span><span class="p">,</span> 
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>        <span class="n">all_details</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="p">)</span>
+</code></pre></div>
+<p>For other calls, such as <code>vmdr.get_hld()</code>, you should make your call look like the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">hosts_with_detections</span> <span class="o">=</span> <span class="n">vmdr</span><span class="o">.</span><span class="n">get_hld</span><span class="p">(</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">auth</span><span class="p">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">show_asset_id</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">show_tags</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">show_cloud_tags</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">host_metadata</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">show_qds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">show_qds_factors</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">)</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.525ec568.min.js"></script>
+      
+    
+  </body>
+</html>

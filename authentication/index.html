@@ -1,0 +1,752 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the qualysdk Python SDK. Make working with Qualys API data easier.">
+      
+      
+        <meta name="author" content="Jake Lindsay <jake@jakelindsay.uk>">
+      
+      
+      
+        <link rel="prev" href="../quickstart/">
+      
+      
+        <link rel="next" href="../gav/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
+    
+    
+      
+        <title>Authentication - qualysdk Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c3ca2c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#auth-classes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="qualysdk Documentation" class="md-header__button md-logo" aria-label="qualysdk Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            qualysdk Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Authentication
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/0x41424142/qualysdk" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="qualysdk Documentation" class="md-nav__button md-logo" aria-label="qualysdk Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    qualysdk Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/0x41424142/qualysdk" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tokenauth-specific-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenAuth-specific Notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-notes-on-auth-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other Notes on Auth Classes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auth-class-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Auth Class Hierarchy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-your-subscriptions-rate-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking Your Subscription's Rate Limit
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gav/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Global AssetView
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vmdr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMDR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../totalcloud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TotalCloud
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud_agent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloud Agent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../containersecurity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Container Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../was/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Web Application Scanning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL Uploads
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../callschema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Call Schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tokenauth-specific-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenAuth-specific Notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-notes-on-auth-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other Notes on Auth Classes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auth-class-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Auth Class Hierarchy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-your-subscriptions-rate-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking Your Subscription's Rate Limit
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="auth-classes">Auth Classes</h1>
+<p><code>qualysdk</code> supports both HTTP Basic Authentication (used mainly for VMDR-based calls) as well as JWT Authentication. </p>
+<blockquote>
+<p><strong>Pro Tip</strong>: Both <code>BasicAuth</code> and <code>TokenAuth</code> can be used as <strong>context managers</strong>!</p>
+<p><strong>Heads Up!</strong>: By default, auth classes assume your Qualys subscription is on the <code>qg3</code> platform. If this is not the case, simply pass <code>platform='qg&lt;n&gt;'</code> where n is 1-4 when creating the object.</p>
+</blockquote>
+<p>When calling an API endpoint, just pass your <code>TokenAuth</code> or <code>BasicAuth</code> object and the tool will handle the rest (or yell at you if you pass the wrong type, shown below):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#Example of using the wrong auth type</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">qualysdk.auth</span> <span class="kn">import</span> <span class="n">BasicAuth</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">qualysdk.gav</span> <span class="kn">import</span> <span class="n">count_assets</span> <span class="c1">#GAV expects JWT auth</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">with</span> <span class="n">BasicAuth</span><span class="p">(</span><span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">platform</span><span class="o">=</span><span class="s1">&#39;qg1&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">auth</span><span class="p">:</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">count</span> <span class="o">=</span> <span class="n">count_assets</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;operatingSystem.category1:`Linux`&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="o">...</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="o">&gt;&gt;&gt;</span><span class="n">qualysdk</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">Exceptions</span><span class="o">.</span><span class="n">AuthTypeMismatchError</span><span class="p">:</span> <span class="n">Auth</span> <span class="nb">type</span> <span class="n">mismatch</span><span class="o">.</span> <span class="n">Expected</span> <span class="n">token</span> <span class="n">but</span> <span class="n">got</span> <span class="n">basic</span><span class="o">.</span>
+</code></pre></div>
+<p>Both authentication objects also support automatic rate limit respecting. The SDK will warn you as you get close to an API endpoint's limit and automatically sleep until the limit is lifted, continuing the call afterwards:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Warning: This endpoint will accept 3 more calls before rate limiting you. qualysdk will automatically sleep once remaining calls hits 0.
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Warning: This endpoint will accept 2 more calls before rate limiting you. qualysdk will automatically sleep once remaining calls hits 0.
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Warning: This endpoint will accept 1 more calls before rate limiting you. qualysdk will automatically sleep once remaining calls hits 0.
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>WARNING: You have reached the rate limit for this endpoint. qualysdk will automatically sleep for 51 seconds and try again at approximately 2024-01-01 19:59:49.500542.
+</code></pre></div>
+<h2 id="tokenauth-specific-notes"><code>TokenAuth</code>-specific Notes</h2>
+<p>Qualys configures JWT tokens to expire 4 hours after they are created. When you make an API call using a <code>TokenAuth</code> object, <code>qualysdk</code> will automatically check if the token is expired and refresh it if necessary before making the call. This is especially useful if <code>qualysdk</code> throttles itself due to hitting your subscription's rate limit, where after sleeping for a variable amount of time (determined by the <code>X-RateLimit-ToWait-Sec</code> header) it will try the call again:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Example of being rate limited and qualysdk refreshing the token automatically:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">&gt;&gt;&gt;</span><span class="ne">Warning</span><span class="p">:</span> <span class="n">This</span> <span class="n">endpoint</span> <span class="n">will</span> <span class="n">accept</span> <span class="mi">2</span> <span class="n">more</span> <span class="n">calls</span> <span class="n">before</span> <span class="n">rate</span> <span class="n">limiting</span> <span class="n">you</span><span class="o">.</span> <span class="n">qualysdk</span> <span class="n">will</span> <span class="n">automatically</span> <span class="n">sleep</span> <span class="n">once</span> <span class="n">remaining</span> <span class="n">calls</span> <span class="n">hits</span> <span class="mf">0.</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="o">...</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="o">&gt;&gt;&gt;</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">You</span> <span class="n">have</span> <span class="n">reached</span> <span class="n">the</span> <span class="n">rate</span> <span class="n">limit</span> <span class="k">for</span> <span class="n">this</span> <span class="n">endpoint</span><span class="o">.</span> <span class="n">qualysdk</span> <span class="n">will</span> <span class="n">automatically</span> <span class="n">sleep</span> <span class="k">for</span> <span class="o">&lt;</span><span class="nb">int</span><span class="o">&gt;</span> <span class="n">seconds</span> <span class="ow">and</span> <span class="k">try</span> <span class="n">again</span> <span class="n">at</span> <span class="n">approximately</span> <span class="o">&lt;</span><span class="n">datetime</span> <span class="n">stamp</span><span class="o">&gt;.</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="o">...</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># After throttle is lifted:</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="o">&gt;&gt;&gt;</span><span class="n">Token</span> <span class="ow">is</span> <span class="mi">4</span><span class="o">+</span> <span class="n">hours</span> <span class="n">old</span><span class="o">.</span> <span class="n">Refreshing</span> <span class="n">token</span><span class="o">...</span>
+</code></pre></div>
+<h2 id="other-notes-on-auth-classes">Other Notes on Auth Classes</h2>
+<p>Both <code>BasicAuth</code> and <code>TokenAuth</code> also have <code>from_dict</code> class methods, which allows for the creation of these objects from dictionaries:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">qualysdk.auth</span> <span class="kn">import</span> <span class="n">BasicAuth</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">auth</span> <span class="o">=</span> <span class="n">BasicAuth</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;username&#39;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span><span class="p">})</span>
+</code></pre></div>
+<p>You can also create an object using a JSON string using <code>from_json_string</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">qualysdk.auth</span> <span class="kn">import</span> <span class="n">BasicAuth</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">auth</span> <span class="o">=</span> <span class="n">BasicAuth</span><span class="o">.</span><span class="n">from_json_string</span><span class="p">(</span><span class="s1">&#39;{&quot;username&quot;:&lt;username&gt;, &quot;password&quot;:&lt;password&gt;}&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>You can also export using <code>to_json_string</code>. If <code>pretty=True</code>, the string will be pretty formatted:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">qualysdk.auth</span> <span class="kn">import</span> <span class="n">BasicAuth</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">auth</span> <span class="o">=</span> <span class="n">BasicAuth</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;username&#39;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span><span class="p">})</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">#No formatting:</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">auth</span><span class="o">.</span><span class="n">to_json_string</span><span class="p">()</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="o">&gt;&gt;&gt;</span><span class="s1">&#39;{&quot;username&quot;: &lt;username&gt;, &quot;password&quot;: &lt;password&gt;, &quot;token&quot;: null, &quot;auth_type&quot;: &quot;basic&quot;, &quot;platform&quot;: &lt;platform&gt;}&#39;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">#With formatting:</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">auth</span><span class="o">.</span><span class="n">to_json_string</span><span class="p">(</span><span class="n">pretty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="o">&gt;&gt;&gt;</span><span class="p">{</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="s2">&quot;auth_type&quot;</span><span class="p">:</span> <span class="s2">&quot;basic&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="s2">&quot;platform&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">platform</span><span class="o">&gt;</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="auth-class-hierarchy">Auth Class Hierarchy</h2>
+<p>The <code>qualysdk.auth</code> module has a class hierarchy that looks like this:</p>
+<pre class="mermaid"><code>graph
+A[qualysdk.auth.base.BaseAuthentication]--&gt;B(qualysdk.auth.basic.BasicAuth)
+B --&gt; C(qualysdk.auth.token.TokenAuth)</code></pre>
+<h2 id="checking-your-subscriptions-rate-limit">Checking Your Subscription's Rate Limit</h2>
+<p>Both <code>BasicAuth</code> and <code>TokenAuth</code> objects allow you to check your subscription's configured rate limits on the fly. To do this, call the <code>get_ratelimit()</code> method:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">qualysdk</span> <span class="kn">import</span> <span class="n">TokenAuth</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">auth</span> <span class="o">=</span> <span class="n">TokenAuth</span><span class="p">(</span><span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">platform</span><span class="o">=</span><span class="s1">&#39;qg1&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">auth</span><span class="o">.</span><span class="n">get_ratelimit</span><span class="p">()</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="o">&gt;&gt;&gt;</span><span class="p">{</span><span class="s1">&#39;X-RateLimit-Limit&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;X-Concurrency-Limit-Limit&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.instant.prefetch"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.525ec568.min.js"></script>
+      
+    
+  </body>
+</html>
